@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  --color-boom-dark: #1a1a1a;
+  --color-boom-orange: #f05a28;
+  --color-boom-yellow: #f5c518;
+  --color-boom-white: #ffffff;
+  --color-whatsapp: #25d366;
+
+  --font-display: var(--font-barlow-condensed), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-barlow), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-boom-dark text-boom-white font-body antialiased;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+}
