@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { LacartaMenuData, LacartaProduct } from "@/lib/lacarta";
 import { LACARTA_MENU_URL } from "@/lib/lacarta";
+import { ContactInquiryForm } from "./ContactInquiryForm";
 
 type SushiBoomLandingProps = {
   menuData: LacartaMenuData | null;
@@ -510,54 +511,70 @@ function FranchiseSection() {
 
 function ContactFooter() {
   return (
-    <footer id="contacto" className="scroll-mt-28 bg-black px-4 py-14 text-white sm:px-6">
-      <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1fr_0.8fr_0.8fr]">
+    <section id="contacto" className="scroll-mt-28 bg-black px-4 py-16 text-white sm:px-6 md:py-24">
+      <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
         <div>
-          <p className="font-display text-3xl font-bold uppercase">BOOM SUSHI</p>
-          <p className="mt-4 max-w-sm text-sm leading-6 text-white/60">
-            Combos, rolls premium, calientes y opciones veggie para pedir sin
-            vueltas.
+          <p className="text-xs font-bold uppercase tracking-[0.28em] text-boom-yellow">
+            Contacto
           </p>
-        </div>
-
-        <div>
-          <h3 className="text-xs font-bold uppercase tracking-[0.24em] text-boom-yellow">
-            Horarios
-          </h3>
-          <p className="mt-4 text-sm leading-7 text-white/68">
-            Lunes a jueves de 10hs a 15hs y de 17hs a 23hs.
-            <br />
-            Viernes a domingo de 10hs a 15hs y de 17hs a 23:30hs.
+          <h2 className="mt-4 font-display text-4xl font-bold uppercase leading-none sm:text-5xl md:text-6xl">
+            Hablemos de tu proximo Boom.
+          </h2>
+          <p className="mt-5 max-w-xl text-lg leading-8 text-white/68">
+            Consultas comerciales, franquicias, eventos o pedidos especiales.
+            Dejanos tus datos y el equipo te responde con una propuesta clara.
           </p>
-        </div>
 
-        <div>
-          <h3 className="text-xs font-bold uppercase tracking-[0.24em] text-boom-yellow">
-            Seguinos
-          </h3>
-          <div className="mt-4 flex items-center gap-3">
-            <SocialLink
-              href="https://www.instagram.com/tusushiboom/"
-              image={brandAssets.instagram}
-              label="Instagram"
-            />
-            <SocialLink
-              href="https://www.facebook.com/sushiboomdelivery/"
-              image={brandAssets.facebook}
-              label="Facebook"
-            />
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
+            <div>
+              <h3 className="text-xs font-bold uppercase tracking-[0.24em] text-boom-yellow">
+                Horarios
+              </h3>
+              <p className="mt-3 text-sm leading-7 text-white/68">
+                Lunes a jueves de 10hs a 15hs y de 17hs a 23hs.
+                <br />
+                Viernes a domingo de 10hs a 15hs y de 17hs a 23:30hs.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-xs font-bold uppercase tracking-[0.24em] text-boom-yellow">
+                Redes
+              </h3>
+              <div className="mt-4 flex items-center gap-3">
+                <SocialLink
+                  href="https://www.instagram.com/tusushiboom/"
+                  image={brandAssets.instagram}
+                  label="Instagram"
+                />
+                <SocialLink
+                  href="https://www.facebook.com/sushiboomdelivery/"
+                  image={brandAssets.facebook}
+                  label="Facebook"
+                />
+              </div>
+            </div>
           </div>
-          <a
-            href={LACARTA_MENU_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 inline-flex rounded-full bg-boom-orange px-6 py-3 text-xs font-bold uppercase tracking-wide text-white transition hover:bg-white hover:text-black"
-          >
-            Pedir online
-          </a>
+        </div>
+
+        <div className="rounded-lg border border-white/10 bg-white/[0.045] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.45)] sm:p-8">
+          <ContactInquiryForm />
         </div>
       </div>
-    </footer>
+
+      <div className="mx-auto mt-14 flex max-w-7xl flex-col gap-4 border-t border-white/10 pt-8 text-sm text-white/50 sm:flex-row sm:items-center sm:justify-between">
+        <p className="font-display text-2xl font-bold uppercase text-white">
+          BOOM SUSHI
+        </p>
+        <a
+          href={LACARTA_MENU_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex w-fit rounded-full bg-boom-orange px-6 py-3 text-xs font-bold uppercase tracking-wide text-white transition hover:bg-white hover:text-black"
+        >
+          Pedir online
+        </a>
+      </div>
+    </section>
   );
 }
 

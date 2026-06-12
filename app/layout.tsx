@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Barlow, Barlow_Condensed } from "next/font/google";
+import { ConvexClientProvider } from "./ConvexClientProvider";
 import "./globals.css";
 
 const barlow = Barlow({
@@ -30,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={`${barlow.variable} ${barlowCondensed.variable}`}>
-        {children}
+        <ConvexClientProvider>{children}</ConvexClientProvider>
       </body>
     </html>
   );
