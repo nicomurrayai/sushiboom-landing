@@ -26,3 +26,15 @@
     font-family: var(--font-display);
   }
 }
+
+@keyframes loading-bar {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(65%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
