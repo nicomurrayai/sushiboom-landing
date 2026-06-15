@@ -39,7 +39,6 @@ export const siteConfig = {
         ],
       },
       { label: "Promociones", href: "#promociones" },
-      { label: "Veggie", href: "#veggie" },
       { label: "Franquicias", href: "#franquicias", highlight: true },
       { label: "Delivery", href: "#delivery" },
       { label: "Contacto", href: "#contacto" },
@@ -72,7 +71,7 @@ export const siteConfig = {
       title: "OPCIONES VEGGIE",
       subtitle: "SABOR SIN LÍMITES PARA TODOS",
       ctas: [
-        { label: "VER VEGGIE", href: "#veggie", variant: "primary" },
+        { label: "VER CARTA", href: "#menu", variant: "primary" },
         { label: "PEDÍ ONLINE", href: orderUrl, variant: "outline" },
       ],
     },

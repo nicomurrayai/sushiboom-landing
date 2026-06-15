@@ -21,8 +21,6 @@ const brandAssets = {
   rolls: "https://sushiboom.com.ar/wp-content/uploads/2021/08/BannerRollsGourmet.png",
   calientes:
     "https://sushiboom.com.ar/wp-content/uploads/2021/08/BannerCalientes.png",
-  greenBoom:
-    "https://sushiboom.com.ar/wp-content/uploads/2021/08/Logo-Green-Boom.png",
   instagram:
     "https://sushiboom.com.ar/wp-content/uploads/2021/09/LogoInstagram-e1630513411745.png",
   facebook:
@@ -56,9 +54,6 @@ export function SushiBoomLanding({ menuData, error }: SushiBoomLandingProps) {
   const rolls = visibleProducts.filter((product) =>
     product.category.toLowerCase().includes("roll"),
   );
-  const veggie = visibleProducts.filter((product) =>
-    product.category.toLowerCase().includes("vegetar"),
-  );
   const calientes = visibleProducts.filter((product) =>
     ["calientes", "piezas especiales", "salsas"].includes(
       product.category.toLowerCase(),
@@ -72,7 +67,6 @@ export function SushiBoomLanding({ menuData, error }: SushiBoomLandingProps) {
       <ProductMenu groups={groups} products={visibleProducts} error={error} />
       <RollsSection products={rolls.slice(0, 6)} />
       <HotSection products={calientes.slice(0, 6)} />
-      <GreenBoomSection products={veggie.slice(0, 4)} />
       <DeliverySection businessName={businessName} />
       <FranchiseSection />
       <ContactFooter />
@@ -395,47 +389,6 @@ function HotSection({ products }: { products: LacartaProduct[] }) {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
           </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function GreenBoomSection({ products }: { products: LacartaProduct[] }) {
-  return (
-    <section id="veggie" className="scroll-mt-28 bg-[#102217] px-4 py-16 text-white sm:px-6 md:py-24">
-      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-center">
-        <div>
-          <div className="relative h-24 w-56">
-            <Image
-              src={brandAssets.greenBoom}
-              alt="Green Boom"
-              fill
-              sizes="224px"
-              className="object-contain object-left"
-            />
-          </div>
-          <h2 className="mt-6 font-display text-4xl font-bold uppercase leading-none sm:text-5xl md:text-6xl">
-            Fresco, natural, veggie.
-          </h2>
-          <p className="mt-5 text-lg leading-8 text-white/72">
-            Opciones verdes con el mismo pulso de Sushi Boom: sabor claro,
-            textura y mucha frescura.
-          </p>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {products.length > 0 ? (
-            products.map((product) => <ProductCard key={product._id} product={product} />)
-          ) : (
-            <a
-              href={LACARTA_MENU_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-lg border border-white/15 bg-white/10 p-6 text-white transition hover:bg-white/15 sm:col-span-2"
-            >
-              Ver opciones veggie en la carta online
-            </a>
-          )}
         </div>
       </div>
     </section>
