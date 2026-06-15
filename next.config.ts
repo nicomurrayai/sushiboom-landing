@@ -14,6 +14,14 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "sushiboom.com.ar",
       },
+      {
+        protocol: "https",
+        hostname: "valiant-deer-565.convex.cloud",
+      },
+      {
+        protocol: "https",
+        hostname: "valiant-deer-565.convex.site",
+      },
     ],
   },
 };
