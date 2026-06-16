@@ -1,8 +1,6 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { useMutation } from "convex/react";
-import { api } from "@/convex/_generated/api";
 
 type FormState = "idle" | "submitting" | "success" | "error";
 
@@ -14,8 +12,9 @@ const initialFields = {
   website: "",
 };
 
+const inquiriesEndpoint = process.env.NEXT_PUBLIC_BOOM_INQUIRIES_ENDPOINT;
+
 export function ContactInquiryForm() {
-  const submitInquiry = useMutation(api.contact.submitInquiry);
   const [fields, setFields] = useState(initialFields);
   const [state, setState] = useState<FormState>("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -26,14 +25,34 @@ export function ContactInquiryForm() {
     setErrorMessage("");
 
     try {
-      await submitInquiry({
-        name: fields.name,
-        email: fields.email,
-        phone: fields.phone || undefined,
-        message: fields.message,
-        source: "sushiboom-contact-section",
-        website: fields.website || undefined,
+      if (!inquiriesEndpoint) {
+        throw new Error("ENDPOINT_NOT_CONFIGURED");
+      }
+
+      const response = await fetch(inquiriesEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          brandSlug: "sushiboom",
+          fullName: fields.name,
+          email: fields.email,
+          phone: fields.phone || undefined,
+          message: fields.message,
+          source: "sushiboom-contact-section",
+          sourceUrl: window.location.href,
+          website: fields.website || undefined,
+        }),
       });
+
+      const payload = (await response.json().catch(() => null)) as
+        | { ok?: boolean; error?: string }
+        | null;
+
+      if (!response.ok || !payload?.ok) {
+        throw new Error(payload?.error ?? "SUBMIT_FAILED");
+      }
 
       setFields(initialFields);
       setState("success");
@@ -178,6 +197,10 @@ function getFriendlyError(error: unknown) {
 
   if (message.includes("INVALID_MESSAGE")) {
     return "La consulta tiene que tener al menos 10 caracteres.";
+  }
+
+  if (message.includes("INVALID_BRAND") || message.includes("ENDPOINT_NOT_CONFIGURED")) {
+    return "El formulario no esta disponible en este momento.";
   }
 
   return "No pudimos enviar la consulta. Intentalo nuevamente.";
