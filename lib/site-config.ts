@@ -46,7 +46,7 @@ export const siteConfig = {
   },
   heroSlides: [
     {
-      image: "/slide-1.jpg",
+      image: "/slide-1.webp",
       badge: "¡APROVECHÁ!",
       title: "PROMO DE LA SEMANA",
       subtitle: "EN COMBOS SELECCIONADOS",
@@ -56,7 +56,7 @@ export const siteConfig = {
       ],
     },
     {
-      image: "/slide-2.png",
+      image: "/slide-2.webp",
       badge: "NUEVO",
       title: "ROLLS PREMIUM",
       subtitle: "SABOR INTENSO EN CADA BOCADO",
@@ -66,7 +66,7 @@ export const siteConfig = {
       ],
     },
     {
-      image: "/slide-3.png",
+      image: "/slide-3.webp",
       badge: "VEGGIE",
       title: "OPCIONES VEGGIE",
       subtitle: "SABOR SIN LÍMITES PARA TODOS",
@@ -76,7 +76,7 @@ export const siteConfig = {
       ],
     },
     {
-      image: "/slide-4.png",
+      image: "/slide-4.webp",
       badge: "DELIVERY",
       title: "LLEVALO A CASA",
       subtitle: "PEDÍ Y RECIBÍ EN MINUTOS",
