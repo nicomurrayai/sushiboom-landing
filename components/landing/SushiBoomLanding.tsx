@@ -421,8 +421,8 @@ function DeliverySection({ businessName }: { businessName: string }) {
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <InfoTile label="Horario" value="Lun a jue 10 a 15 y 17 a 23" />
-          <InfoTile label="Fin de semana" value="Vie a dom hasta 23:30" />
+          <InfoTile label="Lunes a jueves" value="11 a 23 hs" />
+          <InfoTile label="Vie, sáb, dom y feriados" value="11 a 23:30 hs" />
           <InfoTile label="Formato" value="Delivery y take away" />
           <InfoTile label="Menu" value="Actualizado online" />
         </div>
@@ -484,9 +484,9 @@ function ContactFooter() {
                 Horarios
               </h3>
               <p className="mt-3 text-sm leading-7 text-white/68">
-                Lunes a jueves de 10hs a 15hs y de 17hs a 23hs.
+                Lunes a jueves de 11 a 23 hs.
                 <br />
-                Viernes a domingo de 10hs a 15hs y de 17hs a 23:30hs.
+                Viernes, sábado, domingo y feriados de 11 a 23:30 hs.
               </p>
             </div>
             <div>
