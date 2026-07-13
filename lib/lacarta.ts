@@ -1,3 +1,5 @@
+import "server-only";
+
 import { ConvexHttpClient } from "convex/browser";
 import { makeFunctionReference } from "convex/server";
 
@@ -49,14 +51,12 @@ const getMenuDataBySlug = makeFunctionReference<
 >("businesses:getMenuDataBySlug");
 
 export async function getLacartaMenuData(): Promise<MenuDataResult> {
-  const convexUrl =
-    process.env.NEXT_PUBLIC_LACARTA_CONVEX_URL ??
-    process.env.NEXT_PUBLIC_CONVEX_URL;
+  const convexUrl = process.env.NEXT_PUBLIC_LACARTA_CONVEX_URL;
 
   if (!convexUrl) {
     return {
       menuData: null,
-      error: "NEXT_PUBLIC_CONVEX_URL is not configured.",
+      error: "NEXT_PUBLIC_LACARTA_CONVEX_URL is not configured.",
     };
   }
 

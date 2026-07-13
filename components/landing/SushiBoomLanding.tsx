@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { LacartaMenuData, LacartaProduct } from "@/lib/lacarta";
 import { LACARTA_MENU_URL } from "@/lib/lacarta";
 import { ContactInquiryForm } from "./ContactInquiryForm";
+import { ProductMedia } from "./ProductMedia";
 
 type SushiBoomLandingProps = {
   menuData: LacartaMenuData | null;
@@ -45,6 +46,18 @@ const priceFormatter = new Intl.NumberFormat("es-AR", {
   currency: "ARS",
   maximumFractionDigits: 0,
 });
+
+const spanishCollator = new Intl.Collator("es", {
+  sensitivity: "base",
+  numeric: true,
+});
+
+const supportedProductImageHosts = new Set([
+  "tvqzwrzwaadgbcczjmqs.supabase.co",
+  "sushiboom.com.ar",
+  "valiant-deer-565.convex.cloud",
+  "valiant-deer-565.convex.site",
+]);
 
 export function SushiBoomLanding({ menuData, error }: SushiBoomLandingProps) {
   const products = menuData?.products ?? [];
@@ -291,22 +304,8 @@ function ProductCard({ product }: { product: LacartaProduct }) {
   const imageSrc = getProductImage(product);
 
   return (
-    <article className="overflow-hidden rounded-lg border border-black/10 bg-white shadow-[0_14px_40px_rgba(0,0,0,0.08)]">
-      <div className="relative aspect-[4/3] overflow-hidden bg-[#1d1d1d]">
-        {imageSrc ? (
-          <Image
-            src={imageSrc}
-            alt={product.name}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
-            className="object-cover transition duration-500 hover:scale-105"
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center bg-[radial-gradient(circle_at_30%_20%,rgba(240,90,40,0.5),transparent_35%),#171717] px-6 text-center font-display text-2xl font-bold uppercase text-white/70">
-            Boom Sushi
-          </div>
-        )}
-      </div>
+    <article className="group overflow-hidden rounded-lg border border-black/10 bg-white shadow-[0_14px_40px_rgba(0,0,0,0.08)]">
+      <ProductMedia src={imageSrc} alt={product.name} />
 
       <div className="p-5">
         <div className="flex items-start justify-between gap-4">
@@ -646,28 +645,94 @@ function groupProducts(
     grouped.set(product.category, group);
   }
 
-  const categories = Array.from(grouped.keys());
-  const orderedCategories =
-    categoryOrder && categoryOrder.length > 0
-      ? [
-          ...categoryOrder.filter((category) => grouped.has(category)),
-          ...categories.filter((category) => !categoryOrder.includes(category)),
-        ]
-      : categories;
+  const orderedCategories: string[] = [];
+  const seenCategories = new Set<string>();
+
+  for (const category of categoryOrder ?? []) {
+    if (!seenCategories.has(category) && grouped.has(category)) {
+      seenCategories.add(category);
+      orderedCategories.push(category);
+    }
+  }
+
+  const remainingCategories = Array.from(grouped.keys())
+    .filter((category) => !seenCategories.has(category))
+    .sort((left, right) => spanishCollator.compare(left, right));
+
+  orderedCategories.push(...remainingCategories);
 
   return orderedCategories.map((category) => ({
     category,
     id: categoryAnchorMap[category] ?? slugify(category),
-    products: grouped.get(category) ?? [],
+    products: [...(grouped.get(category) ?? [])].sort(compareProducts),
   }));
 }
 
-function getProductImage(product: LacartaProduct) {
-  if (product.contentType?.startsWith("image") && product.contentUrl) {
-    return product.contentUrl;
+function compareProducts(left: LacartaProduct, right: LacartaProduct) {
+  const leftOrder = getFiniteOrder(left.order);
+  const rightOrder = getFiniteOrder(right.order);
+
+  if (leftOrder === null && rightOrder !== null) {
+    return 1;
   }
 
-  return product.thumbnail ?? null;
+  if (leftOrder !== null && rightOrder === null) {
+    return -1;
+  }
+
+  if (leftOrder !== null && rightOrder !== null && leftOrder !== rightOrder) {
+    return leftOrder - rightOrder;
+  }
+
+  const nameComparison = spanishCollator.compare(left.name, right.name);
+  return nameComparison || spanishCollator.compare(left._id, right._id);
+}
+
+function getFiniteOrder(order?: number | null) {
+  return typeof order === "number" && Number.isFinite(order) ? order : null;
+}
+
+function getProductImage(product: LacartaProduct): string | null {
+  const candidates = product.contentType?.toLowerCase().startsWith("image/")
+    ? [product.contentUrl, product.thumbnail]
+    : [product.thumbnail];
+
+  for (const candidate of candidates) {
+    const imageUrl = getCompatibleImageUrl(candidate);
+
+    if (imageUrl) {
+      return imageUrl;
+    }
+  }
+
+  return null;
+}
+
+function getCompatibleImageUrl(value?: string | null): string | null {
+  if (!value) {
+    return null;
+  }
+
+  try {
+    const url = new URL(value);
+
+    if (
+      !["http:", "https:"].includes(url.protocol) ||
+      !supportedProductImageHosts.has(url.hostname) ||
+      url.username ||
+      url.password ||
+      url.port
+    ) {
+      return null;
+    }
+
+    // Product media is always served securely so it remains compatible with
+    // the landing's HTTPS origin and the configured Next.js image optimizer.
+    url.protocol = "https:";
+    return url.toString();
+  } catch {
+    return null;
+  }
 }
 
 function slugify(value: string) {
