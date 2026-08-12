@@ -53,6 +53,7 @@ const spanishCollator = new Intl.Collator("es", {
 });
 
 const supportedProductImageHosts = new Set([
+  "cdn.lacartaa.com",
   "tvqzwrzwaadgbcczjmqs.supabase.co",
   "sushiboom.com.ar",
   "valiant-deer-565.convex.cloud",
