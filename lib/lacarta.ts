@@ -46,7 +46,7 @@ type MenuDataResult = {
 
 const getMenuDataBySlug = makeFunctionReference<
   "query",
-  { slug: string },
+  { slug: string; now: number },
   LacartaMenuData
 >("businesses:getMenuDataBySlug");
 
@@ -64,6 +64,8 @@ export async function getLacartaMenuData(): Promise<MenuDataResult> {
     const convex = new ConvexHttpClient(convexUrl);
     const menuData = await convex.query(getMenuDataBySlug, {
       slug: LACARTA_SLUG,
+      // Required by LaCarta query (avoids Date.now() inside Convex queries).
+      now: Date.now(),
     });
 
     return { menuData, error: null };
