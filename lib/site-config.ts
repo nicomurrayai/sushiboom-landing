@@ -28,16 +28,6 @@ export const siteConfig = {
   },
   nav: {
     links: [
-      {
-        label: "Menú",
-        href: "#menu",
-        children: [
-          { label: "Combos", href: "#combos" },
-          { label: "Rolls", href: "#rolls" },
-          { label: "Entradas", href: "#entradas" },
-          { label: "Bebidas", href: "#bebidas" },
-        ],
-      },
       { label: "Promociones", href: "#promociones" },
       { label: "Franquicias", href: "#franquicias", highlight: true },
       { label: "Delivery", href: "#delivery" },
