@@ -82,7 +82,6 @@ export function SushiBoomLanding({ menuData, error }: SushiBoomLandingProps) {
       <RollsSection products={rolls.slice(0, 6)} />
       <HotSection products={calientes.slice(0, 6)} />
       <DeliverySection businessName={businessName} />
-      <FranchiseSection />
       <ContactFooter />
     </>
   );
@@ -431,80 +430,42 @@ function DeliverySection({ businessName }: { businessName: string }) {
   );
 }
 
-function FranchiseSection() {
-  return (
-    <section id="franquicias" className="scroll-mt-28 bg-[#101010] px-4 py-16 text-white sm:px-6 md:py-24">
-      <div className="mx-auto max-w-7xl">
-        <div className="grid gap-8 border-y border-white/10 py-12 lg:grid-cols-[1fr_0.8fr] lg:items-center">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.28em] text-boom-yellow">
-              Franquicias
-            </p>
-            <h2 className="mt-4 font-display text-4xl font-bold uppercase leading-none sm:text-5xl md:text-6xl">
-              Una marca con energia propia.
-            </h2>
-          </div>
-          <div>
-            <p className="text-lg leading-8 text-white/70">
-              Sushi Boom combina una identidad reconocible, carta visual y
-              propuesta comercial lista para crecer en nuevos puntos.
-            </p>
-            <a
-              href="#contacto"
-              className="mt-7 inline-flex rounded-full border border-white/20 px-7 py-3 text-sm font-bold uppercase tracking-wide text-white transition hover:border-boom-yellow hover:text-boom-yellow"
-            >
-              Contacto comercial
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function ContactFooter() {
   return (
-    <section id="contacto" className="scroll-mt-28 bg-black px-4 py-16 text-white sm:px-6 md:py-24">
+    <section id="franquicias" className="scroll-mt-28 bg-black px-4 py-16 text-white sm:px-6 md:py-24">
+      <span id="contacto" className="block scroll-mt-28" aria-hidden="true" />
       <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.28em] text-boom-yellow">
-            Contacto
+            Franquicias
           </p>
           <h2 className="mt-4 font-display text-4xl font-bold uppercase leading-none sm:text-5xl md:text-6xl">
-            Hablemos de tu proximo Boom.
+            Abrí tu próximo Sushi Boom.
           </h2>
           <p className="mt-5 max-w-xl text-lg leading-8 text-white/68">
-            Consultas comerciales, franquicias, eventos o pedidos especiales.
-            Dejanos tus datos y el equipo te responde con una propuesta clara.
+            Contanos dónde te gustaría llevar la marca y conocé nuestra
+            propuesta de franquicias. El equipo comercial te acompaña en cada
+            paso.
           </p>
 
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
             <div>
               <h3 className="text-xs font-bold uppercase tracking-[0.24em] text-boom-yellow">
-                Horarios
+                Una marca lista para crecer
               </h3>
               <p className="mt-3 text-sm leading-7 text-white/68">
-                Lunes a jueves de 11 a 23 hs.
-                <br />
-                Viernes, sábado, domingo y feriados de 11 a 23:30 hs.
+                Identidad reconocible, una propuesta comercial clara y el
+                respaldo de un equipo con experiencia.
               </p>
             </div>
             <div>
               <h3 className="text-xs font-bold uppercase tracking-[0.24em] text-boom-yellow">
-                Redes
+                Próximo paso
               </h3>
-              <div className="mt-4 flex items-center gap-3">
-                <SocialLink
-                  href="https://www.instagram.com/tusushiboom/"
-                  image={brandAssets.instagram}
-                  label="Instagram"
-                />
-                <SocialLink
-                  href="https://www.facebook.com/sushiboomdelivery/"
-                  image={brandAssets.facebook}
-                  label="Facebook"
-                />
-              </div>
+              <p className="mt-3 text-sm leading-7 text-white/68">
+                Completá el formulario con la ubicación de interés y nos
+                contactaremos para conversar sobre la oportunidad.
+              </p>
             </div>
           </div>
         </div>
@@ -573,28 +534,6 @@ function InfoTile({ label, value }: { label: string; value: string }) {
       </p>
       <p className="mt-3 text-xl font-bold leading-tight">{value}</p>
     </div>
-  );
-}
-
-function SocialLink({
-  href,
-  image,
-  label,
-}: {
-  href: string;
-  image: string;
-  label: string;
-}) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="relative block h-10 w-10 overflow-hidden rounded-full bg-white p-2 transition hover:scale-105"
-      aria-label={label}
-    >
-      <Image src={image} alt="" fill sizes="40px" className="object-contain p-2" />
-    </a>
   );
 }
 

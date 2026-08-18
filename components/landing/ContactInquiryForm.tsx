@@ -128,7 +128,7 @@ export function ContactInquiryForm() {
           maxLength={1200}
           rows={5}
           className="w-full resize-none rounded-md border border-white/12 bg-white/[0.06] px-4 py-3 text-sm leading-6 text-white outline-none transition placeholder:text-white/35 focus:border-boom-yellow/80 focus:bg-white/[0.09]"
-          placeholder="Contanos si queres hacer un pedido grande, abrir una franquicia o recibir informacion comercial."
+          placeholder="Detallá la ubicación donde te interesa abrir la franquicia y contanos sobre tu proyecto."
         />
       </Field>
 
@@ -149,17 +149,19 @@ export function ContactInquiryForm() {
           disabled={state === "submitting"}
           className="inline-flex h-12 items-center justify-center rounded-full bg-boom-yellow px-7 text-sm font-bold uppercase tracking-wide text-boom-dark transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {state === "submitting" ? "Enviando..." : "Enviar consulta"}
+          {state === "submitting" ? "Enviando..." : "Quiero más información"}
         </button>
 
-        {state === "success" && (
-          <p className="text-sm font-semibold text-boom-yellow">
-            Consulta recibida. Te respondemos a la brevedad.
-          </p>
-        )}
-        {state === "error" && (
-          <p className="text-sm font-semibold text-red-200">{errorMessage}</p>
-        )}
+        <div aria-live="polite">
+          {state === "success" ? (
+            <p className="text-sm font-semibold text-boom-yellow">
+              Consulta recibida. Te respondemos a la brevedad.
+            </p>
+          ) : null}
+          {state === "error" ? (
+            <p className="text-sm font-semibold text-red-200">{errorMessage}</p>
+          ) : null}
+        </div>
       </div>
     </form>
   );
