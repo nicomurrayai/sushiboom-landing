@@ -234,7 +234,7 @@ function ProductMenu({
               Carta
             </p>
             <h2 className="mt-4 font-display text-4xl font-bold uppercase leading-none sm:text-5xl md:text-6xl">
-              La carta de Palermo, lista para pedir.
+              La carta, lista para pedir.
             </h2>
           </div>
           <p className="max-w-2xl text-lg leading-8 text-black/65 lg:ml-auto">
