@@ -16,16 +16,10 @@ type ProductGroup = {
 };
 
 const brandAssets = {
-  combos: "https://sushiboom.com.ar/wp-content/uploads/2021/08/Banner1.png",
-  promos:
-    "https://sushiboom.com.ar/wp-content/uploads/2021/08/Banner-Promos-de-la-Semana.png",
-  rolls: "https://sushiboom.com.ar/wp-content/uploads/2021/08/BannerRollsGourmet.png",
-  calientes:
-    "https://sushiboom.com.ar/wp-content/uploads/2021/08/BannerCalientes.png",
-  instagram:
-    "https://sushiboom.com.ar/wp-content/uploads/2021/09/LogoInstagram-e1630513411745.png",
-  facebook:
-    "https://sushiboom.com.ar/wp-content/uploads/2021/09/LogoFacebook-e1630513453407.png",
+  combos: "/slide-1.webp",
+  promos: "/slide-3.webp",
+  rolls: "/slide-2.webp",
+  calientes: "/slide-4.webp",
 };
 
 const categoryAnchorMap: Record<string, string> = {

@@ -28,6 +28,7 @@ export function ProductMedia({ src, alt }: ProductMediaProps) {
   }
 
   const handleImageError = () => setFailedSrc(imageSrc);
+  const unoptimized = shouldBypassNextImageOptimizer(imageSrc);
 
   return (
     <div className="relative isolate aspect-[4/5] overflow-hidden bg-[#1d1d1d]">
@@ -37,6 +38,7 @@ export function ProductMedia({ src, alt }: ProductMediaProps) {
         aria-hidden="true"
         fill
         sizes={productImageSizes}
+        unoptimized={unoptimized}
         className="scale-110 select-none object-cover opacity-45 blur-2xl"
         onError={handleImageError}
       />
@@ -46,9 +48,19 @@ export function ProductMedia({ src, alt }: ProductMediaProps) {
         alt={alt}
         fill
         sizes={productImageSizes}
+        unoptimized={unoptimized}
         className="z-10 scale-[0.96] object-contain transition-transform duration-500 ease-out group-hover:scale-100 motion-reduce:transition-none motion-reduce:group-hover:scale-[0.96]"
         onError={handleImageError}
       />
     </div>
   );
+}
+
+function shouldBypassNextImageOptimizer(src: string) {
+  try {
+    const hostname = new URL(src).hostname;
+    return hostname === "cdn.lacartaa.com" || hostname.endsWith(".supabase.co");
+  } catch {
+    return false;
+  }
 }
