@@ -1,12 +1,14 @@
 import Image from "next/image";
 import type { LacartaMenuData, LacartaProduct } from "@/lib/lacarta";
 import { LACARTA_MENU_URL } from "@/lib/lacarta";
+import { getCategoryAnchor } from "@/lib/menu-navigation";
 import { ContactInquiryForm } from "./ContactInquiryForm";
 import { ProductMedia } from "./ProductMedia";
 
 type SushiBoomLandingProps = {
   menuData: LacartaMenuData | null;
   error: string | null;
+  combosHref: string | null;
 };
 
 type ProductGroup = {
@@ -20,19 +22,6 @@ const brandAssets = {
   promos: "/slide-3.webp",
   rolls: "/slide-2.webp",
   calientes: "/slide-4.webp",
-};
-
-const categoryAnchorMap: Record<string, string> = {
-  Combos: "combos",
-  Bebidas: "bebidas",
-  Calientes: "calientes",
-  Postres: "postres",
-  Salsas: "salsas",
-  "Menu Mediodia": "menu-mediodia",
-  "Rolls Especiales": "rolls-especiales",
-  "Rolls Clasicos": "rolls-clasicos",
-  "Rolls Vegetarianos": "rolls-vegetarianos",
-  "Piezas Especiales": "piezas-especiales",
 };
 
 const priceFormatter = new Intl.NumberFormat("es-AR", {
@@ -54,7 +43,11 @@ const supportedProductImageHosts = new Set([
   "valiant-deer-565.convex.site",
 ]);
 
-export function SushiBoomLanding({ menuData, error }: SushiBoomLandingProps) {
+export function SushiBoomLanding({
+  menuData,
+  error,
+  combosHref,
+}: SushiBoomLandingProps) {
   const products = menuData?.products ?? [];
   const visibleProducts = products.filter((product) => product.show !== false);
   const groups = groupProducts(visibleProducts, menuData?.business.categoryOrder);
@@ -71,7 +64,7 @@ export function SushiBoomLanding({ menuData, error }: SushiBoomLandingProps) {
   return (
     <>
       <BrandIntro productCount={visibleProducts.length} businessName={businessName} />
-      <BrandBanners />
+      <BrandBanners combosHref={combosHref} />
       <ProductMenu groups={groups} products={visibleProducts} error={error} />
       <RollsSection products={rolls.slice(0, 6)} />
       <HotSection products={calientes.slice(0, 6)} />
@@ -137,24 +130,28 @@ function BrandIntro({
   );
 }
 
-function BrandBanners() {
+function BrandBanners({ combosHref }: { combosHref: string | null }) {
   return (
     <section id="promociones" className="scroll-mt-28 bg-boom-dark px-4 py-14 sm:px-6 md:py-20">
       <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-3">
         <BannerCard
           image={brandAssets.combos}
-          title="Combos Sushi Boom"
-          copy="La frescura de cada pieza en formatos para compartir."
-          href="#combos"
-          cta="Ver combos"
+          title={combosHref ? "Combos Sushi Boom" : "Explorá Sushi Boom"}
+          copy={
+            combosHref
+              ? "La frescura de cada pieza en formatos para compartir."
+              : "Descubrí todas las opciones disponibles en nuestra carta."
+          }
+          href={combosHref ?? "#menu"}
+          cta={combosHref ? "Ver combos" : "Ver carta"}
           priority
         />
         <BannerCard
           image={brandAssets.promos}
           title="Promos de la semana"
           copy="Destacados de la carta a un precio pensado para vos."
-          href="#promociones"
-          cta="Ver promos"
+          href="#menu"
+          cta="Ver carta"
         />
         <BannerCard
           image={brandAssets.rolls}
@@ -597,7 +594,7 @@ function groupProducts(
 
   return orderedCategories.map((category) => ({
     category,
-    id: categoryAnchorMap[category] ?? slugify(category),
+    id: getCategoryAnchor(category),
     products: [...(grouped.get(category) ?? [])].sort(compareProducts),
   }));
 }
@@ -667,13 +664,4 @@ function getCompatibleImageUrl(value?: string | null): string | null {
   } catch {
     return null;
   }
-}
-
-function slugify(value: string) {
-  return value
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
 }

@@ -41,7 +41,7 @@ export const siteConfig = {
       title: "PROMO DE LA SEMANA",
       subtitle: "EN COMBOS SELECCIONADOS",
       ctas: [
-        { label: "VER COMBOS", href: "#combos", variant: "primary" },
+        { label: "VER CARTA", href: "#menu", variant: "primary" },
         { label: "PEDÍ ONLINE", href: orderUrl, variant: "outline" },
       ],
     },
@@ -72,13 +72,13 @@ export const siteConfig = {
       subtitle: "PEDÍ Y RECIBÍ EN MINUTOS",
       ctas: [
         { label: "PEDIR AHORA", href: orderUrl, variant: "primary" },
-        { label: "VER ZONAS", href: "#delivery", variant: "outline" },
+        { label: "VER DELIVERY", href: "#delivery", variant: "outline" },
       ],
     },
   ] satisfies HeroSlide[],
   orderUrl,
-  whatsapp: {
-    label: "Pedir",
+  orderFab: {
+    label: "Pedir online",
     href: orderUrl,
   },
 } as const;

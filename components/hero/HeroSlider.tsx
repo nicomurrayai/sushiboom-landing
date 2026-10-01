@@ -7,7 +7,7 @@ import { siteConfig } from "@/lib/site-config";
 import { HeroSlide } from "./HeroSlide";
 import { HeroControls } from "./HeroControls";
 
-export function HeroSlider() {
+export function HeroSlider({ combosHref }: { combosHref: string | null }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 25 }, [
@@ -57,7 +57,18 @@ export function HeroSlider() {
           {siteConfig.heroSlides.map((slide, index) => (
             <HeroSlide
               key={slide.image}
-              slide={slide}
+              slide={{
+                ...slide,
+                ctas: slide.ctas.map((cta, ctaIndex) =>
+                  index === 0 && ctaIndex === 0 && combosHref
+                    ? {
+                        ...cta,
+                        href: combosHref,
+                        label: "VER COMBOS",
+                      }
+                    : cta,
+                ),
+              }}
               priority={index === 0}
             />
           ))}
